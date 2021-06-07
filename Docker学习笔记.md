@@ -742,7 +742,7 @@ docker run -it -v /home/ceshi:/home centos /bin/bash
 启动后通过docker inspect 容器id 查看挂载
 ```
 
-![image-20210604154640882](C:\Users\xusisi\AppData\Roaming\Typora\typora-user-images\image-20210604154640882.png)
+![image-20210604154640882](https://github.com/jinfengbo/Docker/blob/main/images/image-20210604154640882.png)
 
 
 
