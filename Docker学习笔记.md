@@ -709,7 +709,7 @@ docker commit -m="提交描述信息" -a="作者" 容器id  目标镜像名:[TAG
 #通过commit命令提交为一个镜像
 ```
 
-![image-20210604144758976](C:\Users\xusisi\AppData\Roaming\Typora\typora-user-images\image-20210604144758976.png)
+![image-20210604144758976](https://github.com/jinfengbo/Docker/blob/main/images/image-20210604144758976.png)
 
 ***commit可以理解等同于虚拟机快照**
 
