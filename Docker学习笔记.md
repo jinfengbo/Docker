@@ -2,7 +2,7 @@
 
 ## Docker的基本组成
 
-![image-20210602155109081](C:\Users\xusisi\AppData\Roaming\Typora\typora-user-images\image-20210602155109081.png)
+![image-20210602155109081](https://github.com/jinfengbo/Docker/blob/main/images/image-20210602155109081.png)
 
 **镜像(image)：**
 
