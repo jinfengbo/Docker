@@ -808,7 +808,7 @@ local     juming-nginx
 #查看挂载的卷位置
 ```
 
-![image-20210609141238327](https://github.com/jinfengbo/Docker/blob/main/images/image-20210609141238327-1623219174965.png)
+![image-20210609141238327](https://github.com/jinfengbo/Docker/blob/main/images/image-20210609141238327.png)
 
 所有的docker容器内的卷，没有指定目录的情况下都在`/var/lib/docker/volumes/XXXX/_data`
 
@@ -858,7 +858,7 @@ CMD /bin/bash
 #这里的每一个命令，就是一层镜像
 ```
 
-![image-20210610134859654](https://github.com/jinfengbo/Docker/blob/main/images/image-20210610134859654-1623314663600.png)
+![image-20210610134859654](https://github.com/jinfengbo/Docker/blob/main/images/image-20210610134859654.png)
 
 
 
@@ -872,7 +872,7 @@ CMD /bin/bash
 
 
 
-![image-20210610164411970](https://github.com/jinfengbo/Docker/blob/main/images/image-20210610164411970-1623314654395.png)
+![image-20210610164411970](https://github.com/jinfengbo/Docker/blob/main/images/image-20210610164411970.png)
 
 ```shell
 #启动3个容器
