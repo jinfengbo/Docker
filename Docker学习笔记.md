@@ -2,7 +2,7 @@
 
 ## Docker的基本组成
 
-![image-20210602155109081](Docker学习笔记.assets/image-20210602155109081.png)
+![image-20210602155109081](https://github.com/jinfengbo/Docker/blob/main/images/image-20210602155109081.png)
 
 **镜像(image)：**
 
@@ -709,7 +709,7 @@ docker commit -m="提交描述信息" -a="作者" 容器id  目标镜像名:[TAG
 #通过commit命令提交为一个镜像
 ```
 
-![image-20210604144758976](Docker学习笔记.assets/image-20210604144758976.png)
+![image-20210604144758976](https://github.com/jinfengbo/Docker/blob/main/images/image-20210604144758976.png)
 
 ***commit可以理解等同于虚拟机快照**
 
@@ -742,7 +742,7 @@ docker run -it -v /home/ceshi:/home centos /bin/bash
 启动后通过docker inspect 容器id 查看挂载
 ```
 
-![image-20210604154640882](Docker学习笔记.assets/image-20210604154640882.png)
+![image-20210604154640882](https://github.com/jinfengbo/Docker/blob/main/images/image-20210604154640882.png)
 
 
 
@@ -808,7 +808,7 @@ local     juming-nginx
 #查看挂载的卷位置
 ```
 
-![image-20210609141238327](Docker学习笔记.assets/image-20210609141238327-1623219174965.png)
+![image-20210609141238327](https://github.com/jinfengbo/Docker/blob/main/images/image-20210609141238327-1623219174965.png)
 
 所有的docker容器内的卷，没有指定目录的情况下都在`/var/lib/docker/volumes/XXXX/_data`
 
@@ -858,7 +858,7 @@ CMD /bin/bash
 #这里的每一个命令，就是一层镜像
 ```
 
-![image-20210610134859654](Docker学习笔记.assets/image-20210610134859654-1623314663600.png)
+![image-20210610134859654](https://github.com/jinfengbo/Docker/blob/main/images/image-20210610134859654-1623314663600.png)
 
 
 
@@ -872,7 +872,7 @@ CMD /bin/bash
 
 
 
-![image-20210610164411970](Docker学习笔记.assets/image-20210610164411970-1623314654395.png)
+![image-20210610164411970](https://github.com/jinfengbo/Docker/blob/main/images/image-20210610164411970-1623314654395.png)
 
 ```shell
 #启动3个容器
