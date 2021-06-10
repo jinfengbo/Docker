@@ -2,7 +2,7 @@
 
 ## Docker的基本组成
 
-![image-20210602155109081](https://github.com/jinfengbo/Docker/blob/main/images/image-20210602155109081.png)
+![image-20210602155109081](Docker学习笔记.assets/image-20210602155109081.png)
 
 **镜像(image)：**
 
@@ -709,7 +709,7 @@ docker commit -m="提交描述信息" -a="作者" 容器id  目标镜像名:[TAG
 #通过commit命令提交为一个镜像
 ```
 
-![image-20210604144758976](https://github.com/jinfengbo/Docker/blob/main/images/image-20210604144758976.png)
+![image-20210604144758976](Docker学习笔记.assets/image-20210604144758976.png)
 
 ***commit可以理解等同于虚拟机快照**
 
@@ -742,7 +742,7 @@ docker run -it -v /home/ceshi:/home centos /bin/bash
 启动后通过docker inspect 容器id 查看挂载
 ```
 
-![image-20210604154640882](https://github.com/jinfengbo/Docker/blob/main/images/image-20210604154640882.png)
+![image-20210604154640882](Docker学习笔记.assets/image-20210604154640882.png)
 
 
 
@@ -767,4 +767,133 @@ MySQL的数据持久化问题
 [root@web ~]# docker run -d -p 3306:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=djtP@ssword --name mysql01 mysql5.7
 
 ```
+
+
+
+具名和匿名挂载
+
+```shell
+# 匿名挂载
+-v 容器内路径
+docker run -d -P --name nginx01 -v /etc/nginx nginx
+
+#[root@web conf]# docker volume --help
+
+Usage:  docker volume COMMAND
+
+Manage volumes
+
+Commands:
+  create      Create a volume
+  inspect     Display detailed information on one or more volumes
+  ls          List volumes
+  prune       Remove all unused local volumes
+  rm          Remove one or more volumes
+
+Run 'docker volume COMMAND --help' for more information on a command.
+
+#查看所有volume的情况
+[root@web conf]# docker volume ls
+DRIVER    VOLUME NAME
+local     5e58cb356b1c627d599a71fd8623ecbbf2006de2b0dca31bf662e70352fda9a7
+#匿名挂载 在 -v 只写容器内路径没有容器外
+
+[root@web conf]# docker volume ls
+DRIVER    VOLUME NAME
+local     5e58cb356b1c627d599a71fd8623ecbbf2006de2b0dca31bf662e70352fda9a7
+local     juming-nginx
+#[root@web conf]# docker run -d -P --name nginx02 -v juming-nginx:/etc/nginx nginx
+#通过-v 卷名:容器内路径
+
+#查看挂载的卷位置
+```
+
+![image-20210609141238327](Docker学习笔记.assets/image-20210609141238327-1623219174965.png)
+
+所有的docker容器内的卷，没有指定目录的情况下都在`/var/lib/docker/volumes/XXXX/_data`
+
+我们通过具名挂载可以找到一个卷 ，大多数情况在使用`具名挂载`
+
+```shell
+#如何确定具名还是匿名挂载，还是指定路径挂载
+
+-v 容器内路径             #匿名挂载
+-v 卷名：容器内路径        #具名挂载
+-v /宿主机路径：容器内路径  #指定路径挂载
+```
+
+拓展：
+
+```shell
+# 通过 -v 容器内路径 ro rw 改变读写权限
+ro  readonly  # 只读
+ro  readwrite #读写
+
+#设置容器权限，
+docker run -d -P --name nginx02 -v juming-nginx:/etc/nginx:ro nginx
+docker run -d -P --name nginx02 -v juming-nginx:/etc/nginx:rw nginx
+
+#ro  看到ro 说明只能通过宿主机操作，容器内无法操作。
+```
+
+
+
+## 初识 Dockerfile
+
+Dockerfile 就是构建docker镜像的文件   Dockerfile就是命令脚本
+
+通过脚本可以生成镜像，镜像时一层一层  脚本时一个一个命令，每个命令都是一层镜像
+
+```shell
+#创建一个dockerfile文件  建议名字用dockerfileXX  XX指数字
+#Dockerfile文件脚本内容  指令(大写) 参数
+FROM centos
+
+VOLUME ["volume01","volume02"]
+
+CMD echo "----end----"
+
+CMD /bin/bash
+
+#这里的每一个命令，就是一层镜像
+```
+
+![image-20210610134859654](Docker学习笔记.assets/image-20210610134859654-1623314663600.png)
+
+
+
+## 数据卷容器
+
+多个mysql同步数据
+
+```shell
+#  --volume from 容器名/容器ID
+```
+
+
+
+![image-20210610164411970](Docker学习笔记.assets/image-20210610164411970-1623314654395.png)
+
+```shell
+#启动3个容器
+docker run -it --name docker01 镜像名:TAG/镜像ID                        #父容器
+docker run -it --name docker02 --volume from 父容器名 镜像名:TAG/镜像ID  #子容器
+docker run -it --name docker03 --volume from 父容器名 镜像名:TAG/镜像ID  #子容器
+```
+
+**多个mysql实现数据共享**
+
+```shell
+[root@web ~]# docker run -d -p 3306:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=djtP@ssword --name mysql01 mysql5.7
+
+[root@web ~]# docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=djtP@ssword --name mysql02 --volume from mysql01 mysql5.7
+
+#可以实现容器数据同步
+```
+
+**结论：**
+
+容器之间配置信息传递，数据卷容器的生命周期一直持续到没有容器使用为止。
+
+一旦持久化到本地，数据是不会删除
 
