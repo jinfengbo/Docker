@@ -849,7 +849,7 @@ Dockerfile 就是构建docker镜像的文件   Dockerfile就是命令脚本
 #Dockerfile文件脚本内容  指令(大写) 参数
 FROM centos
 
-VOLUME ["volume01","volume02"]
+VOLUME ["/volume01","/volume02"]
 
 CMD echo "----end----"
 
@@ -859,7 +859,10 @@ CMD /bin/bash
 ```
 
 ![image-20210610134859654](https://github.com/jinfengbo/Docker/blob/main/images/image-20210610134859654.png)
-
+```shell
+#构建镜像命令
+docker build -f dockerfile(文件名) -t 构建的镜像名:TAG(版本号) .(.存放dockerfile文件路径)
+```
 
 
 ## 数据卷容器
